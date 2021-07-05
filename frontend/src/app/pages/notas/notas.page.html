@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="end">
+      <ion-chip>
+        <ion-label (click)="deleteUser()" color="light">{{ nick }}</ion-label>
+        <ion-icon (click)="logout()" color="light" name="person-outline"></ion-icon>
+      </ion-chip>
+    </ion-buttons>
+    <ion-title><i class="far fa-clipboard"></i> OurNote</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon color="dark" size="large" (click)="createNota()" name="add-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Notas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar animated placeholder="Buscar" (ionChange)="buscarNota($event)"></ion-searchbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list *ngIf="notas.length !== 0">
+            <ion-item-sliding *ngFor="let nota of notas | buscar: textoBuscar">
+            <ion-item (click)="updateNota(nota)">
+              <ion-label>
+                <h3 class="title">{{nota.titulo}}</h3>
+                <p class="subtext">{{ 'Descripción: ' + nota.descripcion + ' Fecha: ' + nota.created_at.substring(0, 10)}}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item-options slot="end">
+              <ion-item-option color="danger" (click)="deleteNota(nota.idNota)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="success" (click)="updateNota(nota)">
+                <ion-icon name="pencil"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
